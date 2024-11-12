@@ -1,0 +1,62 @@
+﻿@page "/customer-details/{Id:int}"
+
+@using CRM.DTOs.CustomerDTOs;
+@using Microsoft.AspNetCore.Components.Forms;
+@using CRM.AppWebBlazor.Data;
+
+<h3>Ver Cliente</h3>
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="Name">Nombre:</label>
+            <input type="text" class="form-control" disabled @bind="customer.Name" />
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="LastName">Apellido:</label>
+            <input type="text" class="form-control" disabled @bind="customer.LastName" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="Address">Dirección:</label>
+            <textarea disabled class="form-control" @bind="customer.Address"></textarea>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-12">
+            <NavLink href="customer-list" class="btn btn-primary">Ir a buscar clientes</NavLink>
+        </div>
+    </div>
+
+@code {
+    // Parámetro para recibir el ID del cliente desde la llamada al componente
+    [Parameter]
+    public int Id { get; set; } 
+
+    // Inyección de dependencia de CustomerService para acceder a sus métodos
+    [Inject]
+    CustomerService customerService { get; set; } 
+
+    // Creación de una instancia de GetIdResultCustomerDTO para almacenar los datos del cliente
+    GetIdResultCustomerDTO customer = new GetIdResultCustomerDTO();
+
+    /*
+         *  se utiliza para realizar inicializaciones o tareas
+         *  cuando se carga una página o componente de Blazor.
+         * Este método se llama automáticamente cuando el componente se está inicializando
+         *  antes de que se muestre en la interfaz de usuario.
+         */
+    protected override async Task OnInitializedAsync()
+    {
+        // En el momento de inicialización del componente, llama al método GetById de
+        //  CustomerService para obtener los datos del cliente con el ID proporcionado
+        customer = await customerService.GetById(Id); 
+    }
+
+}
