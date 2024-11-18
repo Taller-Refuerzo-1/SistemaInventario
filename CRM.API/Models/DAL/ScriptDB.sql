@@ -1,9 +1,9 @@
 -- Crear la base de datos CRMDB
-CREATE DATABASE CRMDB
+CREATE DATABASE Inventario
 GO
 
 -- Utilizar la base de datos CRMDB
-USE CRMDB
+USE Inventario
 GO
 
 -- Crear la tabla Customers (anteriormente Clients)
@@ -23,7 +23,5 @@ CREATE TABLE Users
     LastName VARCHAR(50) NOT NULL,
      Email VARCHAR(50) NOT NULL,
     Phone VARCHAR(50) NOT NULL,
-    Password VARCHAR(50) NOT NULL,
-
-    
+    Password VARCHAR(50) NOT NULL,   
 )
