@@ -29,7 +29,7 @@ namespace CRM.DTOs.ProviderDTOs
 
         [Display(Name = "Email")]
         [MaxLength(50, ErrorMessage = "El campo Email no puede tener más de 50 caracteres.")]
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         [Display(Name = "Telefono")]
         [MaxLength(50, ErrorMessage = "El campo Telefono no puede tener más de 50 caracteres.")]

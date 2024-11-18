@@ -18,7 +18,7 @@ namespace CRM.DTOs.ProviderDTOs
         public string Empresa { get; set; }
 
         [Display(Name = "Email")]
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         [Display(Name = "Telefono")]
         public string Phone { get; set; }

@@ -22,7 +22,7 @@ namespace CRM.API.Models.DAL
         // Método para obtener un cliente por su ID.
         public async Task<Providers> GetById(int id)
         {
-            var proveedor = await _context.Proveedores.FirstOrDefaultAsync(s => s.Id == id);
+            var proveedor = await _context.Providers.FirstOrDefaultAsync(s => s.Id == id);
             return proveedor != null ? proveedor : new Providers();
         }
 
@@ -51,7 +51,7 @@ namespace CRM.API.Models.DAL
             if (proveedorDelete.Id > 0)
             {
                 // Elimina el cliente de la base de datos.
-                _context.Proveedores.Remove(proveedorDelete);
+                _context.Providers.Remove(proveedorDelete);
                 result = await _context.SaveChangesAsync();
             }
             return result;
@@ -60,7 +60,7 @@ namespace CRM.API.Models.DAL
         // Método privado para construir una consulta IQueryable para buscar clientes con filtros.
         private IQueryable<Providers> Query(Providers prov)
         {
-            var query = _context.Proveedores.AsQueryable();
+            var query = _context.Providers.AsQueryable();
             if (!string.IsNullOrWhiteSpace(prov.Name))
                 query = query.Where(s => s.Name.Contains(prov.Name));
             if (!string.IsNullOrWhiteSpace(prov.Empresa))
