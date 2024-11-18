@@ -15,6 +15,7 @@ namespace CRM.API.Models.DAL
         // Define un DbSet llamado "Customers" que representa una tabla de clientes en la base de datos.
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Users> users { get; set; }
+        public DbSet<Providers> Proveedores { get; set; }
 
     }
 }

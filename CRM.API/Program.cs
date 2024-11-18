@@ -17,21 +17,25 @@ builder.Services.AddDbContext<CRMContext>(options =>
 
 // Agrega una instancia de la clase CustomerDAL como un servicio para la inyección de dependencias.
 builder.Services.AddScoped<CustomerDAL>();
+builder.Services.AddScoped<UsersDAL>();
+builder.Services.AddScoped<ProvidersDAL>();
 
 // Construye la aplicación web.
 var app = builder.Build();
 
 // Agrega los puntos finales relacionados con los clientes a la aplicación.
 app.AddCustomerEndpoints();
+app.AddUsersEndpoints();
+app.AddProviderEndpoints();
 
 // Verifica si la aplicación se está ejecutando en un entorno de desarrollo.
 if (app.Environment.IsDevelopment())
 {
     // Habilita el uso de Swagger para la documentación de la API.
-   
 }
 app.UseSwagger();
 app.UseSwaggerUI();
+
 // Agrega middleware para redirigir las solicitudes HTTP a HTTPS.
 app.UseHttpsRedirection();
 
