@@ -17,5 +17,8 @@ namespace CRM.DTOs.UsersDTOs
 
         [Display(Name = "Teléfono")]
         public string Phone { get; set; }
+
+        [Display(Name = "Contraseña")]
+        public string Password { get; set; }
     }
 }
