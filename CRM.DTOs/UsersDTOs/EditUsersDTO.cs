@@ -12,6 +12,7 @@ namespace CRM.DTOs.UsersDTOs
             LastName = user.LastName;
             Email = user.Email;
             Phone = user.Phone;
+            Password = user.Password;
         }
 
         // Constructor vacío

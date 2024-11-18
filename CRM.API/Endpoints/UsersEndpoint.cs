@@ -1,5 +1,6 @@
 ﻿using CRM.API.Models.DAL;
 using CRM.API.Models.EN;
+using CRM.DTOs.CustomerDTOs;
 using CRM.DTOs.UsersDTOs;
 using static CRM.DTOs.UsersDTOs.SearchResultUsersDTO;
 
@@ -59,7 +60,81 @@ namespace CRM.API.Endpoints
                 return userResult;
             });
 
-            
+            app.MapGet("/User/{id}", async (int id, UsersDAL users) =>
+            {
+                // Obtener un cliente por ID
+                var user = await users.GetById(id);
+
+                // Crear un objeto 'GetIdResultCustomerDTO' para almacenar el resultado
+                var UserResult = new GetIdResultUsersDTO
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Phone = user.Phone,
+                    Password = user.Password,
+                };
+
+                // Verificar si se encontró el cliente y devolver la respuesta correspondiente
+                if (UserResult.Id > 0)
+                    return Results.Ok(UserResult);
+                else
+                    return Results.NotFound(UserResult);    
+            });
+
+            app.MapPost("/User", async (CreateUsersDTO create, UsersDAL users) =>
+            {
+                // Crear un objeto 'Customer' a partir de los datos proporcionados
+                var user = new Users
+                {
+                    Name = create.Name,
+                    LastName = create.LastName,
+                    Email= create.Email,
+                    Phone = create.Phone,
+                    Password = create.Password,
+                };
+
+                // Intentar crear el cliente y devolver el resultado correspondiente
+                int result = await users.Create(user);
+                if (result != 0)
+                    return Results.Ok(result);
+                else
+                    return Results.StatusCode(500);
+            });
+
+            app.MapPut("/User", async (EditUsersDTO edit, UsersDAL users) =>
+            {
+                // Crear un objeto 'Customer' a partir de los datos proporcionados
+                var user = new Users
+                {
+                    Id = edit.Id,
+                    Name = edit.Name,
+                    LastName = edit.LastName,
+                    Email = edit.Email,
+                    Phone = edit.Phone,
+                    Password = edit.Password
+                    
+                };
+
+                // Intentar editar el cliente y devolver el resultado correspondiente
+                int result = await users.Edit(user);
+                if (result != 0)
+                    return Results.Ok(result);
+                else
+                    return Results.StatusCode(500);
+            });
+
+            app.MapDelete("/User/{id}", async (int id, UsersDAL users) =>
+            {
+                // Intentar eliminar el cliente y devolver el resultado correspondiente
+                int result = await users.Delete(id);
+                if (result != 0)
+                    return Results.Ok(result);
+                else
+                    return Results.StatusCode(500);
+            });
+
         }
     }
 }
