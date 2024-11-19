@@ -77,5 +77,11 @@ namespace CRM.API.Models.DAL
             query = query.OrderByDescending(s => s.Id).Skip(skip).Take(take);
             return await query.ToListAsync();
         }
+
+        public async Task<Users> ObtenerUsuarioPorDUIyPassword(string name, string password)
+        {
+            return await _context.users
+                .FirstOrDefaultAsync(u => u.Name == name && u.Password == password);  // Asumiendo que tienes campos DUI y Password en tu base de datos
+        }
     }
 }

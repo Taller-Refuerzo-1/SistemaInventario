@@ -1,43 +1,96 @@
-// Importa los espacios de nombres necesarios para el proyecto.
 using CRM.API.Endpoints;
 using CRM.API.Models.DAL;
+using CRM.API.Models.EN;
+using CRM.DTOs.UsersDTOs;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
-// Crea un nuevo constructor de la aplicación web.
 var builder = WebApplication.CreateBuilder(args);
 
-// Agrega servicios para habilitar la generación de documentación de API.
+// Servicios necesarios
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    // Configuración de seguridad para JWT en Swagger
+    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Por favor ingresa el token JWT",
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
 
-// Configura y agrega un contexto de base de datos para Entity Framework Core.
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+
+// Configuración de base de datos
 builder.Services.AddDbContext<CRMContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Conn"))
 );
 
-// Agrega una instancia de la clase CustomerDAL como un servicio para la inyección de dependencias.
 builder.Services.AddScoped<CustomerDAL>();
 builder.Services.AddScoped<UsersDAL>();
 builder.Services.AddScoped<ProvidersDAL>();
 
-// Construye la aplicación web.
+// Configuración de autenticación y autorización
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = "JwtBearer";
+    options.DefaultChallengeScheme = "JwtBearer";
+})
+.AddJwtBearer("JwtBearer", options =>
+{
+    var secretKey = builder.Configuration["Jwt:Key"];
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = key  // La clave para verificar la firma del token
+    };
+});
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
-// Agrega los puntos finales relacionados con los clientes a la aplicación.
+// Middlewares
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseAuthentication(); // Autenticación
+app.UseAuthorization();  // Autorización
+
+// Endpoints
 app.AddCustomerEndpoints();
 app.AddUsersEndpoints();
 app.AddProviderEndpoints();
+app.AddAuthEndpoints();  // Llamada para agregar los endpoints de autenticación
 
-// Verifica si la aplicación se está ejecutando en un entorno de desarrollo.
-if (app.Environment.IsDevelopment())
-{
-    // Habilita el uso de Swagger para la documentación de la API.
-}
-app.UseSwagger();
-app.UseSwaggerUI();
-
-// Agrega middleware para redirigir las solicitudes HTTP a HTTPS.
-app.UseHttpsRedirection();
-
-// Ejecuta la aplicación.
 app.Run();
