@@ -1,0 +1,130 @@
+﻿@model SearchQueryUsersDTO
+
+@{
+    ViewData["Title"] = "Buscar Cliente";
+    int totalRegistros = (int)ViewBag.CountRow;
+    int totalPaginas = (int)Math.Ceiling((double)totalRegistros / Model.Take);
+    int inicio = Model.Skip + 1;
+    int fin = Math.Min(Model.Skip + Model.Take, totalRegistros);
+}
+
+
+<hr class="mb-6" />
+
+<div class="bg-white p-6 rounded-lg shadow-sm">
+    <form asp-action="Index">
+        <div asp-validation-summary="ModelOnly" class="text-red-500 mb-4"></div>
+        <input asp-for="SendRowCount" type="hidden" id="txtSendRowCount" />
+        <input asp-for="Skip" type="hidden" id="txtSkip" />
+        <input name="CountRow" value="@totalRegistros" type="hidden" />
+
+        <!-- Filtros de búsqueda -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+            <div class="form-group">
+                <label asp-for="Name_Like" class="block text-gray-700">Nombre</label>
+                <input asp-for="Name_Like" class="form-control p-2 border border-gray-300 rounded-md w-full" />
+                <span asp-validation-for="Name_Like" class="text-red-500"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LastName_Like" class="block text-gray-700">Apellido</label>
+                <input asp-for="LastName_Like" class="form-control p-2 border border-gray-300 rounded-md w-full" />
+                <span asp-validation-for="LastName_Like" class="text-red-500"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Take" class="block text-gray-700">Mostrar</label>
+                <select asp-for="Take" class="form-control p-2 border border-gray-300 rounded-md w-full">
+                    @for (var i = 5; i <= 20; i += 5)
+                    {
+                        if (i == Model.Take)
+                        {
+                            <option selected value="@i">@i</option>
+                        }
+                        else
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="Take" class="text-red-500"></span>
+            </div>
+
+        </div>
+
+        <!-- Botones -->
+        <div class="flex space-x-4 mb-4">
+            <div class="flex items-center bg-blue-500 text-white py-2 px-6 rounded-md cursor-pointer hover:bg-blue-600">
+                <svg class="w-6 h-6 text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                </svg>
+                <input type="submit" id="btnSearch" value="Buscar" class="bg-transparent text-white border-none focus:outline-none" />
+            </div>
+            <a asp-action="Create" class="btn btn-primary bg-green-500 text-white py-2 px-6 rounded-md cursor-pointer hover:bg-green-600 flex items-center">
+                <svg class="w-6 h-6 text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28" />
+                </svg>
+                Ir Crear
+            </a>
+        </div>
+
+        <!-- Paginación -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination flex justify-center space-x-2">
+                @{
+                    int skipAnte = Model.Skip > 0 ? Model.Skip - Model.Take : 0;
+                    int skipMax = 0;
+                }
+                <li class="page-item">
+                    <a class="page-link bg-gray-300 text-gray-700 hover:bg-gray-400 p-2 rounded-md" data-skip="@skipAnte" href="#" onclick="paginacion(this)">Anterior</a>
+                </li>
+
+                @for (var i = 0; i < totalPaginas; i++)
+                {
+                    int skip = i * Model.Take;
+                    int numPag = i + 1;
+                    if (skip != Model.Skip)
+                    {
+                        <li class="page-item">
+                            <a class="page-link bg-gray-300 text-gray-700 hover:bg-gray-400 p-2 rounded-md" data-skip="@skip" href="#" onclick="paginacion(this)">@numPag</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link bg-blue-500 text-white p-2 rounded-md" data-skip="@skip" href="#" onclick="paginacion(this)">@numPag</a>
+                        </li>
+                    }
+                    skipMax = skip;
+                }
+
+                @{
+                    int skipSi = Model.Skip + Model.Take;
+                    skipSi = skipSi > skipMax ? skipSi - Model.Take : skipSi;
+                }
+                <li class="page-item">
+                    <a class="page-link bg-gray-300 text-gray-700 hover:bg-gray-400 p-2 rounded-md" data-skip="@skipSi" href="#" onclick="paginacion(this)">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+
+
+        <!-- Total de registros -->
+        <div class="mt-4">
+            <span class="text-gray-700">Total registros: @totalRegistros</span>
+        </div>
+    </form>
+</div>
+
+<script>
+    function paginacion(li) {
+        const skip = li.getAttribute("data-skip");
+        const btnSearch = document.getElementById("btnSearch");
+        const txtSkip = document.getElementById("txtSkip");
+        const txtSendRowCount = document.getElementById("txtSendRowCount");
+        txtSkip.value = skip;
+        txtSendRowCount.value = 1;
+        btnSearch.click();
+    }
+</script>
+

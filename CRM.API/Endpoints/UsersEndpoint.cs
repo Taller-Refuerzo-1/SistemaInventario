@@ -2,7 +2,6 @@
 using CRM.API.Models.EN;
 using CRM.DTOs.CustomerDTOs;
 using CRM.DTOs.UsersDTOs;
-using static CRM.DTOs.UsersDTOs.SearchResultUsersDTO;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CRM.API.Endpoints

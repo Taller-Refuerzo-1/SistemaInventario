@@ -1,0 +1,70 @@
+﻿@model IEnumerable<SearchResultUsersDTO.UserDTO>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(item => item.Name)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(item => item.LastName)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(item => item.Email)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(item => item.Phone)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <span class="sr-only">Acciones</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td class="px-6 py-4">
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td class="px-6 py-4">
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td class="px-6 py-4">
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex space-x-2">
+                            <!-- Modificar -->
+                            <a href="@Url.Action("Edit", new { id = item.Id })" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 flex items-center">
+                                <svg class="w-6 h-6 text-white mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 3.487a2.25 2.25 0 0 1 3.182 3.182l-9 9a4.5 4.5 0 0 1-2.25 1.182l-2.25.563a.75.75 0 0 1-.911-.911l.563-2.25a4.5 4.5 0 0 1 1.182-2.25l9-9z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12.75V19.5a1.5 1.5 0 0 1-1.5 1.5H6a1.5 1.5 0 0 1-1.5-1.5v-10.5a1.5 1.5 0 0 1 1.5-1.5h6.75" />
+                                </svg>
+                                Modificar
+                            </a>
+                            <!-- Ver -->
+                            <a href="@Url.Action("Details", new { id = item.Id })" class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900 flex items-center">
+                                <svg class="w-6 h-6 text-white mr-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.086 6.414a1.5 1.5 0 1 1 2.172 2.172l-1.379 1.379a.25.25 0 0 0-.057.139v2a1 1 0 1 1-2 0v-2a2.25 2.25 0 0 1 .586-1.5l.678-.678z" clip-rule="evenodd" />
+                                </svg>
+                                Ver
+                            </a>
+                            <!-- Eliminar -->
+                            <a href="@Url.Action("Delete", new { id = item.Id })" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 flex items-center">
+                                <svg class="w-6 h-6 text-white mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Eliminar
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
