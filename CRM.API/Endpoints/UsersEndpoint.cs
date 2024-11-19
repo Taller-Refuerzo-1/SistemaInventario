@@ -12,7 +12,7 @@ namespace CRM.API.Endpoints
         public static void AddUsersEndpoints(this WebApplication app)
         {
             // Endpoint de búsqueda de usuarios con autorización
-            app.MapPost("/user/search", async (SearchQueryUsersDTO usersDTO, UsersDAL users) =>
+            app.MapPost("/User/search", async (SearchQueryUsersDTO usersDTO, UsersDAL users) =>
             {
                 var user = new Users
                 {
