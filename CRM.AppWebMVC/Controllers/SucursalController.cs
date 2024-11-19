@@ -7,7 +7,7 @@ namespace CRM.AppWebMVC.Controllers
     {
         // Para Hacer Solicitudes Al Servidor:
         private readonly HttpClient _HttpClient;
-
+         
         public SucursalController(IHttpClientFactory httpClientFactory)
         {
             _HttpClient = httpClientFactory.CreateClient("CRMAPI");

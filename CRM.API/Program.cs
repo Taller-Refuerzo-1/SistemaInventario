@@ -18,7 +18,7 @@ builder.Services.AddDbContext<CRMContext>(options =>
 // Agrega una instancia de la clase CustomerDAL como un servicio para la inyección de dependencias.
 builder.Services.AddScoped<CustomerDAL>();
 builder.Services.AddScoped<UsersDAL>();
-builder.Services.AddScoped<ProvidersDAL>();
+builder.Services.AddScoped<ProvidersDAL>(); 
 builder.Services.AddScoped<SucursalDAL>();
 
 // Construye la aplicación web.

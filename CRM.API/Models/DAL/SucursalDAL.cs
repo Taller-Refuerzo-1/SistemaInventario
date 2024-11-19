@@ -12,7 +12,7 @@ namespace CRM.API.Models.DAL
         {
             _CRMContext = cRMContext;
         }
-
+         
 
 
         // OBTIENE TODOS LOS REGISTROS DE LA DB:

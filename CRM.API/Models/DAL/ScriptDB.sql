@@ -14,7 +14,7 @@ CREATE TABLE Customers
     LastName VARCHAR(50) NOT NULL,
     Address VARCHAR(255)
 )
-GO
+GO 
 
 CREATE TABLE Users
 (

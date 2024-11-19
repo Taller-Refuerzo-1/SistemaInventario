@@ -10,7 +10,7 @@ namespace CRM.DTOs.SucursalDTOs
         public string Nombre { get; set; }
 
         [Required(ErrorMessage = "Ingrese La Direccion De La Sucursal.")]
-        public string Direccion { get; set; }
+        public string Direccion { get; set; } 
 
         [Required(ErrorMessage = "Ingrese El Telefono De La Sucursal.")]
         public string Telefono { get; set; }

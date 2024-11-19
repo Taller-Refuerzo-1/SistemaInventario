@@ -19,7 +19,7 @@ namespace CRM.API.Endpoints
 
             });
 
-
+             
             // GET: REGISTRO
             app.MapGet("/api/Sucursal/{id}", async (int id, SucursalDAL _sucursalDAL) =>
             {
