@@ -35,3 +35,12 @@ CREATE TABLE Providers
     Email VARCHAR(50) NOT NULL,
     Phone VARCHAR(50) NOT NULL,
 )
+
+CREATE TABLE Sucursal
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Direccion VARCHAR(50) NOT NULL,
+    Telefono VARCHAR(50) NOT NULL,
+    Empleados int NOT NULL,
+)

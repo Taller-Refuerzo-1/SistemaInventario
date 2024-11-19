@@ -19,6 +19,7 @@ builder.Services.AddDbContext<CRMContext>(options =>
 builder.Services.AddScoped<CustomerDAL>();
 builder.Services.AddScoped<UsersDAL>();
 builder.Services.AddScoped<ProvidersDAL>();
+builder.Services.AddScoped<SucursalDAL>();
 
 // Construye la aplicación web.
 var app = builder.Build();
@@ -27,6 +28,7 @@ var app = builder.Build();
 app.AddCustomerEndpoints();
 app.AddUsersEndpoints();
 app.AddProviderEndpoints();
+app.AddSucursalEndpoint();
 
 // Verifica si la aplicación se está ejecutando en un entorno de desarrollo.
 if (app.Environment.IsDevelopment())
