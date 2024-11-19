@@ -36,6 +36,7 @@ CREATE TABLE Providers
     Phone VARCHAR(50) NOT NULL,
 )
 
+
 CREATE TABLE Sucursal
 (
     Id INT IDENTITY(1,1) PRIMARY KEY,
