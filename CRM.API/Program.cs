@@ -49,7 +49,8 @@ builder.Services.AddDbContext<CRMContext>(options =>
 
 builder.Services.AddScoped<CustomerDAL>();
 builder.Services.AddScoped<UsersDAL>();
-builder.Services.AddScoped<ProvidersDAL>();
+builder.Services.AddScoped<ProvidersDAL>(); 
+builder.Services.AddScoped<SucursalDAL>();
 
 // Configuración de autenticación y autorización
 builder.Services.AddAuthentication(options =>
@@ -76,7 +77,13 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Middlewares
+// Agrega los puntos finales relacionados con los clientes a la aplicación.
+app.AddCustomerEndpoints();
+app.AddUsersEndpoints();
+app.AddProviderEndpoints();
+app.AddSucursalEndpoint();
+
+// Verifica si la aplicación se está ejecutando en un entorno de desarrollo.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

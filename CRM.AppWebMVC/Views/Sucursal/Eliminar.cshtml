@@ -1,0 +1,134 @@
+﻿@model CRM.DTOs.SucursalDTOs.Obtener_PorID
+
+@{
+    ViewData["Title"] = "Eliminar";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3f4f6;
+        }
+         
+        .form-container {
+            max-width: 550px;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            margin-top: 20px;
+        }
+
+            .form-container h1 {
+                text-align: center;
+                font-size: 28px;
+                font-weight: bold;
+                color: #333;
+                text-transform: uppercase;
+                margin-bottom: 20px;
+            }
+
+            .form-container .row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .form-container dt {
+                font-weight: bold;
+                width: 30%;
+            }
+
+            .form-container dd {
+                width: 70%;
+            }
+
+        .btn {
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #dc2626; /* Cambio de color a rojo */
+            color: white;
+        }
+
+            .btn-primary:hover {
+                background-color: #b91c1c; /* Color de hover */
+            }
+
+        .btn-secondary {
+            background-color: #6b7280;
+            color: white;
+        }
+
+            .btn-secondary:hover {
+                background-color: #4b5563;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Eliminar</h1>
+
+        <div>
+            <h5>Datos</h5>
+            <hr />
+
+            <!-- Fila #1 -->
+            <div class="row">
+                <div class="col-sm-5">
+                    <dt>NOMBRE:</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.Nombre)</dd>
+                </div>
+
+                <div class="col-sm-5">
+                    <dt>DIRECCION:</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.Direccion)</dd>
+                </div>
+            </div>
+
+            <!-- Fila #2 -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <dt>TELEFONO:</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.Telefono)</dd>
+                </div>
+
+                <div class="col-sm-6">
+                    <dt>Cant. EMPLEADOS:</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.Empleados)</dd>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BOTONES -->
+        <form asp-action="Eliminar">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="ELIMINAR" class="btn btn-primary" /> |
+            <a asp-action="Registrados" class="btn btn-secondary">CANCELAR</a>
+        </form>
+    </div>
+</body>
+
+</html>

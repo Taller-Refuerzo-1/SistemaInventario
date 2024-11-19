@@ -1,0 +1,62 @@
+﻿@model CRM.DTOs.SucursalDTOs.Registrados_Sucursal
+
+@{
+    ViewData["Title"] = "REGISTROS";
+}
+
+<div class="container mx-auto p-6">
+    <div class="bg-gray-100 rounded-lg shadow-md p-6">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-4">Sucursales Registradas</h1>
+
+        <a asp-action="Crear" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 inline-block">Registrar Nuevo</a>
+
+        <div class="overflow-x-auto">
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2">NOMBRE</th>
+                        <th class="px-4 py-2">DIRECCION</th> 
+                        <th class="px-4 py-2">TELEFONO</th>
+                        <th class="px-4 py-2">Cant. EMPLEADOS</th>
+                        <th class="px-4 py-2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Lista_Sucursales)
+                    {
+                        <tr>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.Nombre)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.Direccion)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.Telefono)</td>
+                            <td class="px-4 py-2">@Html.DisplayFor(modelItem => item.Empleados)</td>
+                            <td class="px-4 py-2">
+                                <div class="flex gap-3">
+                                    <a asp-action="Editar" asp-route-id="@item.Id" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-block">Editar</a>
+                                    <a asp-action="Detalle" asp-route-id="@item.Id" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-block">Detalles</a>
+                                    <a asp-action="Eliminar" asp-route-id="@item.Id" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-block">Eliminar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>

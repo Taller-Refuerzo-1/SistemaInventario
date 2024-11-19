@@ -14,7 +14,7 @@ CREATE TABLE Customers
     LastName VARCHAR(50) NOT NULL,
     Address VARCHAR(255)
 )
-GO
+GO 
 
 CREATE TABLE Users
 (
@@ -34,4 +34,14 @@ CREATE TABLE Providers
     Empresa VARCHAR(50) NOT NULL,
     Email VARCHAR(50) NOT NULL,
     Phone VARCHAR(50) NOT NULL,
+)
+
+
+CREATE TABLE Sucursal
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Direccion VARCHAR(50) NOT NULL,
+    Telefono VARCHAR(50) NOT NULL,
+    Empleados int NOT NULL,
 )

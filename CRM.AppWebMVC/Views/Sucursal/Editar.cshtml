@@ -1,0 +1,118 @@
+﻿@model CRM.DTOs.SucursalDTOs.Editar_Sucursal
+
+@{
+    ViewData["Title"] = "REGISTRAR";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3f4f6; 
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+            color: white;
+        }
+
+            .btn-primary:hover {
+                background-color: #1d4ed8;
+            }
+
+        .btn-secondary {
+            background-color: #6b7280;
+            color: white;
+        }
+
+            .btn-secondary:hover {
+                background-color: #4b5563;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-3xl font-bold text-center text-gray-800 uppercase mb-4">Sucursal</h1>
+
+        <h5 class="text-lg font-bold">Datos</h5>
+        <hr class="my-4">
+
+        <form asp-action="Editar" class="space-y-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-full md:w-1/2 px-2 mb-4">
+                    <label class="form-label">NOMBRE:</label>
+                    <input asp-for="Nombre" class="form-input" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <div class="w-full md:w-1/2 px-2 mb-4">
+                    <label class="form-label">DIRECCION:</label>
+                    <input asp-for="Direccion" class="form-input" />
+                    <span asp-validation-for="Direccion" class="text-danger"></span>
+                </div>
+
+                <div class="w-full md:w-1/2 px-2 mb-4">
+                    <label class="form-label">TELEFONO:</label>
+                    <input asp-for="Telefono" class="form-input" />
+                    <span asp-validation-for="Telefono" class="text-danger"></span>
+                </div>
+
+                <div class="w-full md:w-1/2 px-2 mb-4">
+                    <label class="form-label">Cant. Empleados:</label>
+                    <input asp-for="Empleados" class="form-input" />
+                    <span asp-validation-for="Empleados" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="flex justify-center">
+                <input type="submit" value="GUARDAR" class="btn btn-primary mr-4" />
+                <a asp-action="Registrados" class="btn btn-secondary">CANCELAR</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
