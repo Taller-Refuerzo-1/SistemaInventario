@@ -12,7 +12,7 @@ namespace CRM.API.Endpoints
         public static void AddUsersEndpoints(this WebApplication app)
         {
             // Endpoint de búsqueda de usuarios con autorización
-            app.MapPost("/user/search", [Authorize] async (SearchQueryUsersDTO usersDTO, UsersDAL users) =>
+            app.MapPost("/user/search", async (SearchQueryUsersDTO usersDTO, UsersDAL users) =>
             {
                 var user = new Users
                 {
@@ -56,7 +56,7 @@ namespace CRM.API.Endpoints
             });
 
             // Endpoint de obtención de un usuario por ID con autorización
-            app.MapGet("/User/{id}", [Authorize] async (int id, UsersDAL users) =>
+            app.MapGet("/User/{id}", async (int id, UsersDAL users) =>
             {
                 var user = await users.GetById(id);
 
@@ -77,7 +77,7 @@ namespace CRM.API.Endpoints
             });
 
             // Endpoint de creación de un usuario con autorización
-            app.MapPost("/User", [Authorize] async (CreateUsersDTO create, UsersDAL users) =>
+            app.MapPost("/User", async (CreateUsersDTO create, UsersDAL users) =>
             {
                 var user = new Users
                 {
@@ -96,7 +96,7 @@ namespace CRM.API.Endpoints
             });
 
             // Endpoint de edición de un usuario con autorización
-            app.MapPut("/User", [Authorize] async (EditUsersDTO edit, UsersDAL users) =>
+            app.MapPut("/User", async (EditUsersDTO edit, UsersDAL users) =>
             {
                 var user = new Users
                 {
@@ -116,7 +116,7 @@ namespace CRM.API.Endpoints
             });
 
             // Endpoint de eliminación de un usuario con autorización
-            app.MapDelete("/User/{id}", [Authorize] async (int id, UsersDAL users) =>
+            app.MapDelete("/User/{id}", async (int id, UsersDAL users) =>
             {
                 int result = await users.Delete(id);
                 if (result != 0)
