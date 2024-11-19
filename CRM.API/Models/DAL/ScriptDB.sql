@@ -45,3 +45,13 @@ CREATE TABLE Sucursal
     Telefono VARCHAR(50) NOT NULL,
     Empleados int NOT NULL,
 )
+
+CREATE TABLE Company
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    Address VARCHAR(255) NOT NULL,
+    Telephone VARCHAR(10),
+	Email VARCHAR(50)NOT NULL,
+)
+GO 

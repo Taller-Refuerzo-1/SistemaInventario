@@ -50,6 +50,7 @@ builder.Services.AddScoped<CustomerDAL>();
 builder.Services.AddScoped<UsersDAL>();
 builder.Services.AddScoped<ProvidersDAL>();
 builder.Services.AddScoped<SucursalDAL>();
+builder.Services.AddScoped<CompanyDAL>();
 
 // Authentication Configuration
 builder.Services.AddAuthentication(options =>
@@ -93,5 +94,6 @@ app.AddUsersEndpoints();
 app.AddProviderEndpoints();
 app.AddSucursalEndpoint();
 app.AddAuthEndpoints();
+app.AddCompanyEndpoints();
 
 app.Run();
