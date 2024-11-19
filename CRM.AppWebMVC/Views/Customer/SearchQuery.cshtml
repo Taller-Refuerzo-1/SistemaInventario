@@ -35,7 +35,7 @@
             <div class="form-group">
                 <label asp-for="Take" class="block text-gray-700">Mostrar</label>
                 <select asp-for="Take" class="form-control p-2 border border-gray-300 rounded-md w-full">
-                    @for (var i = 10; i < 1000; i += 10)
+                    @for (var i = 5; i <= 20; i += 5)
                     {
                         if (i == Model.Take)
                         {
@@ -49,55 +49,65 @@
                 </select>
                 <span asp-validation-for="Take" class="text-red-500"></span>
             </div>
+
         </div>
 
         <!-- Botones -->
         <div class="flex space-x-4 mb-4">
-            <input type="submit" id="btnSearch" value="Buscar" class="btn btn-primary bg-blue-500 text-white py-2 px-6 rounded-md cursor-pointer hover:bg-blue-600" />
-            <a asp-action="Create" class="btn btn-primary bg-green-500 text-white py-2 px-6 rounded-md cursor-pointer hover:bg-green-600">Ir Crear</a>
+            <div class="flex items-center bg-blue-500 text-white py-2 px-6 rounded-md cursor-pointer hover:bg-blue-600">
+                <svg class="w-6 h-6 text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                </svg>
+                <input type="submit" id="btnSearch" value="Buscar" class="bg-transparent text-white border-none focus:outline-none" />
+            </div>
+            <a asp-action="Create" class="btn btn-primary bg-green-500 text-white py-2 px-6 rounded-md cursor-pointer hover:bg-green-600 flex items-center">
+                <svg class="w-6 h-6 text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28" />
+                </svg>
+                Ir Crear
+            </a>
         </div>
 
         <!-- Paginación -->
-        <div class="overflow-auto">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination flex justify-center space-x-2">
-                    @{
-                        int skipAnte = Model.Skip > 0 ? Model.Skip - Model.Take : 0;
-                        int skipMax = 0;
-                    }
-                    <li class="page-item">
-                        <a class="page-link bg-gray-300 text-gray-700 hover:bg-gray-400 p-2 rounded-md" data-skip="@skipAnte" href="#" onclick="paginacion(this)">Anterior</a>
-                    </li>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination flex justify-center space-x-2">
+                @{
+                    int skipAnte = Model.Skip > 0 ? Model.Skip - Model.Take : 0;
+                    int skipMax = 0;
+                }
+                <li class="page-item">
+                    <a class="page-link bg-gray-300 text-gray-700 hover:bg-gray-400 p-2 rounded-md" data-skip="@skipAnte" href="#" onclick="paginacion(this)">Anterior</a>
+                </li>
 
-                    @for (var i = 0; i < totalPaginas; i++)
+                @for (var i = 0; i < totalPaginas; i++)
+                {
+                    int skip = i * Model.Take;
+                    int numPag = i + 1;
+                    if (skip != Model.Skip)
                     {
-                        int skip = i * Model.Take;
-                        int numPag = i + 1;
-                        if (skip != Model.Skip)
-                        {
-                            <li class="page-item">
-                                <a class="page-link bg-gray-300 text-gray-700 hover:bg-gray-400 p-2 rounded-md" data-skip="@skip" href="#" onclick="paginacion(this)">@numPag</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="page-item">
-                                <a class="page-link bg-blue-500 text-white p-2 rounded-md" data-skip="@skip" href="#" onclick="paginacion(this)">@numPag</a>
-                            </li>
-                        }
-                        skipMax = skip;
+                        <li class="page-item">
+                            <a class="page-link bg-gray-300 text-gray-700 hover:bg-gray-400 p-2 rounded-md" data-skip="@skip" href="#" onclick="paginacion(this)">@numPag</a>
+                        </li>
                     }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link bg-blue-500 text-white p-2 rounded-md" data-skip="@skip" href="#" onclick="paginacion(this)">@numPag</a>
+                        </li>
+                    }
+                    skipMax = skip;
+                }
 
-                    @{
-                        int skipSi = Model.Skip + Model.Take;
-                        skipSi = skipSi > skipMax ? skipSi - Model.Take : skipSi;
-                    }
-                    <li class="page-item">
-                        <a class="page-link bg-gray-300 text-gray-700 hover:bg-gray-400 p-2 rounded-md" data-skip="@skipSi" href="#" onclick="paginacion(this)">Siguiente</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+                @{
+                    int skipSi = Model.Skip + Model.Take;
+                    skipSi = skipSi > skipMax ? skipSi - Model.Take : skipSi;
+                }
+                <li class="page-item">
+                    <a class="page-link bg-gray-300 text-gray-700 hover:bg-gray-400 p-2 rounded-md" data-skip="@skipSi" href="#" onclick="paginacion(this)">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+
 
         <!-- Total de registros -->
         <div class="mt-4">
