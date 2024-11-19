@@ -11,21 +11,19 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Servicios necesarios
+// Swagger Configuration
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    // Configuración de seguridad para JWT en Swagger
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Description = "Por favor ingresa el token JWT",
+        Description = "Ingresa el token JWT",
         Name = "Authorization",
         Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
         BearerFormat = "JWT",
         Scheme = "Bearer"
     });
-
     c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
     {
         {
@@ -42,17 +40,18 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Configuración de base de datos
+// Database Configuration
 builder.Services.AddDbContext<CRMContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Conn"))
 );
 
+// DAL Services
 builder.Services.AddScoped<CustomerDAL>();
 builder.Services.AddScoped<UsersDAL>();
-builder.Services.AddScoped<ProvidersDAL>(); 
+builder.Services.AddScoped<ProvidersDAL>();
 builder.Services.AddScoped<SucursalDAL>();
 
-// Configuración de autenticación y autorización
+// Authentication Configuration
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = "JwtBearer";
@@ -62,14 +61,13 @@ builder.Services.AddAuthentication(options =>
 {
     var secretKey = builder.Configuration["Jwt:Key"];
     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = false,
         ValidateAudience = false,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = key  // La clave para verificar la firma del token
+        IssuerSigningKey = key
     };
 });
 
@@ -77,27 +75,23 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Agrega los puntos finales relacionados con los clientes a la aplicación.
-app.AddCustomerEndpoints();
-app.AddUsersEndpoints();
-app.AddProviderEndpoints();
-app.AddSucursalEndpoint();
-
-// Verifica si la aplicación se está ejecutando en un entorno de desarrollo.
+// Swagger and Development Configuration
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// Middleware Configuration
 app.UseHttpsRedirection();
-app.UseAuthentication(); // Autenticación
-app.UseAuthorization();  // Autorización
+app.UseAuthentication();
+app.UseAuthorization();
 
-// Endpoints
+// Endpoint Registration (remove duplicates)
 app.AddCustomerEndpoints();
 app.AddUsersEndpoints();
 app.AddProviderEndpoints();
-app.AddAuthEndpoints();  // Llamada para agregar los endpoints de autenticación
+app.AddSucursalEndpoint();
+app.AddAuthEndpoints();
 
 app.Run();
