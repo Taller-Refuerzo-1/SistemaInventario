@@ -1,0 +1,58 @@
+﻿@model GetIdResultCompanyDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800">
+        <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-5">Detalle</h1>
+        <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Compañia</h4>
+        <hr class="mb-5" />
+
+        <form asp-action="Details">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden" />
+
+            <!-- Nombre -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+                <div class="form-group">
+                    <label asp-for="Name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre</label>
+                    <input asp-for="Name" disabled class="mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+            <!-- Dirección -->
+            <div class="form-group mb-5">
+                <label asp-for="Address" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Dirección</label>
+                <textarea asp-for="Address" disabled class="mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+                <!-- Telefono -->
+                <div class="form-group mb-5">
+                    <label asp-for="Telephone" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Telefono</label>
+                    <textarea asp-for="Telephone" disabled class="mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+                    <span asp-validation-for="Telephone" class="text-danger"></span>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group mb-5">
+                    <label asp-for="Email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                    <textarea asp-for="Email" disabled class="mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+            <!-- Botón de regresar -->
+            <div class="flex justify-end">
+                <a asp-action="Index" class="btn btn-secondary inline-block py-2 px-4 text-sm font-medium text-center text-white bg-gray-600 rounded-md hover:bg-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">Ir ver clientes</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
