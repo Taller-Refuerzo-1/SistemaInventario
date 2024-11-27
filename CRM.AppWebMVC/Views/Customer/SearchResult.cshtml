@@ -19,6 +19,8 @@
             </tr>
         </thead>
         <tbody>
+            @if (Model != null && Model.Any())
+            {
             @foreach (var item in Model)
             {
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -58,6 +60,12 @@
                         </div>
                     </td>
                 </tr>
+            }
+           
+            }
+            else
+            {
+                <p>No se encontraron resultados.</p>
             }
         </tbody>
 
