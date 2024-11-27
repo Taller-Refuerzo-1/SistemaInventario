@@ -8,14 +8,8 @@ namespace CRM.DTOs.UsersDTOs
 {
     public class LoginDTO
     {
-        /// <summary>
-        /// Nombre de usuario.
-        /// </summary>
+        
         public string Name { get; set; }
-
-        /// <summary>
-        /// Contraseña del usuario.
-        /// </summary>
         public string Password { get; set; }
     }
 }

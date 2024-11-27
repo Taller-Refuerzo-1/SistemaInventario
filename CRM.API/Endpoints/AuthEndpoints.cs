@@ -1,5 +1,5 @@
 ﻿using CRM.API.Models.DAL;
-using CRM.API.Models.EN;  // Asegúrate de que el espacio de nombres es correcto
+using CRM.API.Models.EN;
 using CRM.DTOs.UsersDTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -13,36 +13,55 @@ namespace CRM.API.Endpoints
     {
         public static void AddAuthEndpoints(this WebApplication app)
         {
-            app.MapPost("/api/auth/login", async ([FromBody] LoginDTO loginDTO, IConfiguration configuration, UsersDAL usersDAL) =>
+            app.MapPost("/api/auth/login", async (
+                [FromBody] LoginDTO loginDTO,
+                IConfiguration configuration,
+                UsersDAL usersDAL) =>
             {
-                // Lógica de validación de credenciales (reemplazar con lógica real usando UsersDAL)
+                // Validar credenciales
                 var user = await usersDAL.ObtenerUsuarioPorDUIyPassword(loginDTO.Name, loginDTO.Password);
 
                 if (user == null)
                 {
-                    return Results.Json(new { message = "Credenciales inválidas" }, statusCode: StatusCodes.Status401Unauthorized);
+                    return Results.Problem(
+                        detail: "Credenciales inválidas",
+                        statusCode: StatusCodes.Status401Unauthorized
+                    );
                 }
 
-                // Crear las reclamaciones (claims) del token
+                // Configurar los claims para el token
                 var claims = new[]
-                {
-                    new Claim(ClaimTypes.Name, user.Name),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()) // Usando el ID del usuario como claim
-                };
+{
+    new Claim(ClaimTypes.Name, user.Name),
+    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+    new Claim(JwtRegisteredClaimNames.Email, user.Email),
+    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+};
 
-                // Leer la clave secreta desde el archivo de configuración
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"] ?? "TuLlaveSecretaSuperSegura123"));
+
+                // Leer la clave secreta desde la configuración
+                var secretKey = configuration["Jwt:Key"];
+                if (string.IsNullOrEmpty(secretKey))
+                {
+                    return Results.Problem(
+                        detail: "La clave secreta para generar el token no está configurada",
+                        statusCode: StatusCodes.Status500InternalServerError
+                    );
+                }
+
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                // Crear el token
+                // Crear el token JWT
                 var token = new JwtSecurityToken(
-                    issuer: null,
-                    audience: null,
+                    issuer: configuration["Jwt:Issuer"],
+                    audience: configuration["Jwt:Audience"],
                     claims: claims,
-                    expires: DateTime.Now.AddHours(24),
-                    signingCredentials: creds);
+                    expires: DateTime.UtcNow.AddHours(24), // Token expira en 24 horas
+                    signingCredentials: creds
+                );
 
-                // Devolver el token al cliente
+                // Responder con el token y su expiración
                 return Results.Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),

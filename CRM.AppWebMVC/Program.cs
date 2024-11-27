@@ -3,6 +3,8 @@ var builder = WebApplication.CreateBuilder(args); // Crea un constructor de apli
 // Agrega servicios al contenedor de dependencias.
 builder.Services.AddControllersWithViews(); // Agrega servicios para controladores y vistas
 
+
+
 // Configura y agrega un cliente HTTP con nombre "CRMAPI"
 builder.Services.AddHttpClient("CRMAPI", c =>
 {
@@ -21,6 +23,8 @@ if (!app.Environment.IsDevelopment())
     // El valor HSTS predeterminado es de 30 días. Puedes cambiarlo para escenarios de producción.
     app.UseHsts();
 }
+
+
 
 app.UseHttpsRedirection(); // Redirige las solicitudes HTTP a HTTPS
 app.UseStaticFiles(); // Habilita el uso de archivos estáticos como CSS, JavaScript, imágenes, etc.
