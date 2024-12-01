@@ -84,7 +84,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Middleware Configuration
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
