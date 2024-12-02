@@ -1,7 +1,7 @@
 ﻿@model SearchQueryUsersDTO
 
 @{
-    ViewData["Title"] = "Buscar Cliente";
+    ViewData["Title"] = "Buscar Usuarios";
     int totalRegistros = (int)ViewBag.CountRow;
     int totalPaginas = (int)Math.Ceiling((double)totalRegistros / Model.Take);
     int inicio = Model.Skip + 1;
