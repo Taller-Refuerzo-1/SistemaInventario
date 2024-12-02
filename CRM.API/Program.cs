@@ -54,6 +54,7 @@ builder.Services.AddScoped<UsersDAL>();
 builder.Services.AddScoped<ProvidersDAL>();
 builder.Services.AddScoped<SucursalDAL>();
 builder.Services.AddScoped<CompanyDAL>();
+builder.Services.AddScoped<CategoryDAL>();
 
 // Configuración de autenticación y JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -126,5 +127,6 @@ app.AddProviderEndpoints();
 app.AddSucursalEndpoint();
 app.AddAuthEndpoints();
 app.AddCompanyEndpoints();
+app.AddCategoryEndpoints();
 
 app.Run();

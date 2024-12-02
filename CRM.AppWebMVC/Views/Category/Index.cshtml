@@ -1,0 +1,21 @@
+﻿@model SearchResultCategoryDTO
+
+@{
+    ViewData["Title"] = "Index";
+    var modelSearchQuery = ViewBag.SearchQuery as SearchQueryCategoryDTOs;
+}
+
+
+    <!-- Sección de búsqueda -->
+    <div class="mb-6 p-4 border border-gray-300 rounded-lg shadow-sm bg-white">
+    <h2 class="text-xl font-medium text-gray-700 mb-4">Buscar Categorias</h2>
+    <partial name="SearchQuery" model="modelSearchQuery" />
+    </div>
+
+    <!-- Sección de resultados -->
+    <div class="overflow-x-auto">
+    <h2 class="text-xl font-medium text-gray-700 mb-4">Resultados de la Búsqueda</h2>
+    <partial name="SearchResult" model="Model.Data" />
+    </div>
+
+

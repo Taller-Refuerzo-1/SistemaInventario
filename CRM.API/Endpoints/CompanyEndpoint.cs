@@ -15,8 +15,7 @@ namespace CRM.API.Endpoints
                     // Crear un objeto 'Company' a partir de los datos proporcionados
                     var company = new Company
                     {
-                        Name = companyDTO.Name_Like != null ? companyDTO.Name_Like : string.Empty,
-                        Address = companyDTO.Address_Like != null ? companyDTO.Address_Like : string.Empty
+                        Name = companyDTO.Name_Like != null ? companyDTO.Name_Like : string.Empty
                     };
 
                     // Inicializar una lista de empresas y una variable para contar las filas

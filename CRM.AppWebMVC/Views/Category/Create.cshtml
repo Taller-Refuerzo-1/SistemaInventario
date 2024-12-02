@@ -1,0 +1,32 @@
+﻿@model CRM.DTOs.CategoryDTOs.CreateCategoryDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="text-3xl font-semibold mb-6">Crear</h1>
+
+<h4 class="text-xl font-medium mb-4">Category</h4>
+<hr class="mb-6" />
+
+<form asp-action="Create" class="space-y-6">
+    <div class="grid gap-6 md:grid-cols-2">
+        <div>
+            <label for="Name" class="block mb-2 text-sm font-medium text-gray-900">Nombre</label>
+            <input asp-for="Name" id="Name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+            <span asp-validation-for="Name" class="text-red-500 text-sm"></span>
+        </div>
+
+    <div class="flex items-center mt-6 space-x-4">
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
+            Crear
+        </button>
+        <a asp-action="Index" class="text-sm text-red-600 hover:underline">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

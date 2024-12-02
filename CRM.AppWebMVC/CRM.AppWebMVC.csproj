@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CRM.API\CRM.API.csproj" />
     <ProjectReference Include="..\CRM.DTOs\CRM.DTOs.csproj" />
   </ItemGroup>
 

@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CRM.DTOs.CompanyDTOs
+namespace CRM.DTOs.CategoryDTOs
 {
-    public class SearchQueryCompanyDTO
+    public class SearchQueryCategoryDTOs
     {
         [Display(Name = "Nombre")]
         public string? Name_Like { get; set; }
+        
         [Display(Name = "Pagina")]
         public int Skip { get; set; }
         [Display(Name = "CantReg X Pagina")]

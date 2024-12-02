@@ -1,44 +1,45 @@
-﻿using CRM.DTOs.CompanyDTOs;
+﻿using CRM.DTOs.CategoryDTOs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRM.AppWebMVC.Controllers
 {
-    public class CompanyController : Controller
+    public class CategoryController : Controller
     {
         private readonly HttpClient _httpClientCRMAPI;
 
         // Constructor que recibe una instancia de IHttpClientFactory para crear el cliente HTTP
-        public CompanyController(IHttpClientFactory httpClientFactory)
+        public CategoryController(IHttpClientFactory httpClientFactory)
         {
             _httpClientCRMAPI = httpClientFactory.CreateClient("CRMAPI");
         }
 
         // Método para mostrar la lista de compañías
-        public async Task<IActionResult> Index(SearchQueryCompanyDTO searchQueryCompanyDTO, int CountRow = 0)
+        public async Task<IActionResult> Index(SearchQueryCategoryDTOs searchQueryCategoryDTO, int CountRow = 0)
         {
             // Configuración de valores por defecto para la búsqueda
-            if (searchQueryCompanyDTO.SendRowCount == 0)
-                searchQueryCompanyDTO.SendRowCount = 2;
-            if (searchQueryCompanyDTO.Take == 0)
-                searchQueryCompanyDTO.Take = 10;
+            if (searchQueryCategoryDTO.SendRowCount == 0)
+                searchQueryCategoryDTO.SendRowCount = 2;
+            if (searchQueryCategoryDTO.Take == 0)
+                searchQueryCategoryDTO.Take = 10;
 
-            var result = new SearchResultCompanyDTO();
+            var result = new SearchResultCategoryDTO();
 
             // Realizar una solicitud HTTP POST para buscar compañías en el servicio web
-            var response = await _httpClientCRMAPI.PostAsJsonAsync("company/search", searchQueryCompanyDTO);
+            var response = await _httpClientCRMAPI.PostAsJsonAsync("category/search", searchQueryCategoryDTO);
 
             if (response.IsSuccessStatusCode)
-                result = await response.Content.ReadFromJsonAsync<SearchResultCompanyDTO>();
+                result = await response.Content.ReadFromJsonAsync<SearchResultCategoryDTO>();
 
-            result = result != null ? result : new SearchResultCompanyDTO();
+            result = result != null ? result : new SearchResultCategoryDTO();
 
             // Configuración de valores para la vista
-            if (result.CountRow == 0 && searchQueryCompanyDTO.SendRowCount == 1)
+            if (result.CountRow == 0 && searchQueryCategoryDTO.SendRowCount == 1)
                 result.CountRow = CountRow;
 
             ViewBag.CountRow = result.CountRow;
-            searchQueryCompanyDTO.SendRowCount = 0;
-            ViewBag.SearchQuery = searchQueryCompanyDTO;
+            searchQueryCategoryDTO.SendRowCount = 0;
+            ViewBag.SearchQuery = searchQueryCategoryDTO;
 
             return View(result);
         }
@@ -46,15 +47,15 @@ namespace CRM.AppWebMVC.Controllers
         // Método para mostrar los detalles de una compañía
         public async Task<IActionResult> Details(int id)
         {
-            var result = new GetIdResultCompanyDTO();
+            var result = new GetIdResultCategoryDTO();
 
-            // Realizar una solicitud HTTP GET para obtener los detalles de la compañía por ID
-            var response = await _httpClientCRMAPI.GetAsync("company/" + id);
+            // Realizar una solicitud HTTP GET para obtener los detalles de la compañía por ID 
+            var response = await _httpClientCRMAPI.GetAsync("category/" + id);
 
             if (response.IsSuccessStatusCode)
-                result = await response.Content.ReadFromJsonAsync<GetIdResultCompanyDTO>();
+                result = await response.Content.ReadFromJsonAsync<GetIdResultCategoryDTO>();
 
-            return View(result ?? new GetIdResultCompanyDTO());
+            return View(result ?? new GetIdResultCategoryDTO());
         }
 
         // Método para mostrar el formulario de creación de una compañía
@@ -66,12 +67,12 @@ namespace CRM.AppWebMVC.Controllers
         // Método para procesar la creación de una compañía
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateCompanyDTO createCompanyDTO)
+        public async Task<IActionResult> Create(CreateCategoryDTO createCategoryDTO)
         {
             try
             {
                 // Realizar una solicitud HTTP POST para crear una nueva compañía
-                var response = await _httpClientCRMAPI.PostAsJsonAsync("company", createCompanyDTO);
+                var response = await _httpClientCRMAPI.PostAsJsonAsync("category", createCategoryDTO);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -91,24 +92,24 @@ namespace CRM.AppWebMVC.Controllers
         // Método para mostrar el formulario de edición de una compañía
         public async Task<IActionResult> Edit(int id)
         {
-            var result = new GetIdResultCompanyDTO();
-            var response = await _httpClientCRMAPI.GetAsync("company/" + id);
+            var result = new GetIdResultCategoryDTO();
+            var response = await _httpClientCRMAPI.GetAsync("category/" + id);
 
             if (response.IsSuccessStatusCode)
-                result = await response.Content.ReadFromJsonAsync<GetIdResultCompanyDTO>();
+                result = await response.Content.ReadFromJsonAsync<GetIdResultCategoryDTO>();
 
-            return View(new EditCompanyDTO(result ?? new GetIdResultCompanyDTO()));
+            return View(new EditCategoryDTO(result ?? new GetIdResultCategoryDTO()));
         }
 
         // Método para procesar la edición de una compañía
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, EditCompanyDTO editCompanyDTO)
+        public async Task<IActionResult> Edit(int id, EditCategoryDTO editCategoryDTO)
         {
             try
             {
                 // Realizar una solicitud HTTP PUT para editar la compañía
-                var response = await _httpClientCRMAPI.PutAsJsonAsync("company", editCompanyDTO);
+                var response = await _httpClientCRMAPI.PutAsJsonAsync("category", editCategoryDTO);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -128,24 +129,24 @@ namespace CRM.AppWebMVC.Controllers
         // Método para mostrar la página de confirmación de eliminación de una compañía
         public async Task<IActionResult> Delete(int id)
         {
-            var result = new GetIdResultCompanyDTO();
-            var response = await _httpClientCRMAPI.GetAsync("company/" + id);
+            var result = new GetIdResultCategoryDTO();
+            var response = await _httpClientCRMAPI.GetAsync("category/" + id);
 
             if (response.IsSuccessStatusCode)
-                result = await response.Content.ReadFromJsonAsync<GetIdResultCompanyDTO>();
+                result = await response.Content.ReadFromJsonAsync<GetIdResultCategoryDTO>();
 
-            return View(result ?? new GetIdResultCompanyDTO());
+            return View(result ?? new GetIdResultCategoryDTO());
         }
 
         // Método para procesar la eliminación de una compañía
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, GetIdResultCompanyDTO getIdResultCompanyDTO)
+        public async Task<IActionResult> Delete(int id, GetIdResultCategoryDTO getIdResultCategryDTO, object getIdResultCategoryDTO)
         {
             try
             {
                 // Realizar una solicitud HTTP DELETE para eliminar la compañía por ID
-                var response = await _httpClientCRMAPI.DeleteAsync("company/" + id);
+                var response = await _httpClientCRMAPI.DeleteAsync("category/" + id);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -153,14 +154,13 @@ namespace CRM.AppWebMVC.Controllers
                 }
 
                 ViewBag.Error = "Error al intentar eliminar el registro";
-                return View(getIdResultCompanyDTO);
+                return View(getIdResultCategoryDTO);
             }
             catch (Exception ex)
             {
                 ViewBag.Error = ex.Message;
-                return View(getIdResultCompanyDTO);
+                return View(getIdResultCategoryDTO);
             }
         }
     }
 }
-

@@ -19,5 +19,7 @@ namespace CRM.API.Models.DAL
         public DbSet<Sucursal> Sucursal { get; set; }
         public DbSet<Company> Companys { get; set; }
 
+        public DbSet<Category> Category { get; set; }
+
     }
 }
