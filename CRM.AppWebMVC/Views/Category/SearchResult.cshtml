@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SearchResultCustomerDTO.CustomerDTO>
+﻿@model IEnumerable<SearchResultCategoryDTO.CategoryDTO>
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -6,12 +6,6 @@
             <tr>
                 <th scope="col" class="px-6 py-3">
                     @Html.DisplayNameFor(item => item.Name)
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    @Html.DisplayNameFor(item => item.LastName)
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    @Html.DisplayNameFor(item => item.Address)
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <span class="sr-only">Acciones</span>
@@ -26,12 +20,6 @@
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td class="px-6 py-4">
-                        @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td class="px-6 py-4">
-                        @Html.DisplayFor(modelItem => item.Address)
                     </td>
                     <td class="px-6 py-4 text-right">
                         <div class="flex space-x-2">

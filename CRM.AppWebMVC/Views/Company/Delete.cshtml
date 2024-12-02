@@ -1,0 +1,58 @@
+﻿@model CRM.DTOs.CompanyDTOs.GetIdResultCompanyDTO
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1 class="text-2xl font-semibold mb-4">Eliminar</h1>
+
+<h3 class="text-lg mb-4">¿Estás seguro de que deseas eliminar esta compañia?</h3>
+<div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800 dark:text-white">
+    <h4 class="text-xl font-bold mb-4">Compañia</h4>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+            <div class="form-group">
+                <label asp-for="Name" class="block text-sm font-medium text-gray-700 dark:text-gray-300"></label>
+                <input asp-for="Name" disabled class="form-input w-full border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600" />
+                <span asp-validation-for="Name" class="text-sm text-red-500"></span>
+            </div>
+        </div>
+        <div>
+            <div class="form-group">
+                <label asp-for="Address" class="block text-sm font-medium text-gray-700 dark:text-gray-300"></label>
+                <input asp-for="Address" disabled class="form-input w-full border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600" />
+                <span asp-validation-for="Address" class="text-sm text-red-500"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-6">
+        <div class="form-group">
+            <label asp-for="Telephone" class="block text-sm font-medium text-gray-700 dark:text-gray-300"></label>
+            <textarea asp-for="Telephone" disabled class="form-textarea w-full border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"></textarea>
+            <span asp-validation-for="Telephone" class="text-sm text-red-500"></span>
+        </div>
+    </div>
+
+    <div class="mb-6">
+        <div class="form-group">
+            <label asp-for="Email" class="block text-sm font-medium text-gray-700 dark:text-gray-300"></label>
+            <textarea asp-for="Email" disabled class="form-textarea w-full border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"></textarea>
+            <span asp-validation-for="Email" class="text-sm text-red-500"></span>
+        </div>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <div class="flex space-x-4">
+            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">Eliminar</button>
+            <a asp-action="Index" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

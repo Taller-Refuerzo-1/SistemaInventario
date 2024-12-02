@@ -1,11 +1,14 @@
 ﻿using CRM.API.Models.DAL;
 using CRM.API.Models.EN;
 using CRM.DTOs.CustomerDTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CRM.API.Endpoints
 {
+    
     public static class CustomerEndpoint
     {
+        
         // Método para configurar los endpoints relacionados con los clientes
         public static void AddCustomerEndpoints(this WebApplication app)
         {
@@ -57,7 +60,7 @@ namespace CRM.API.Endpoints
 
                 // Devolver los resultados
                 return customerResult;
-            });
+            }).RequireAuthorization();
 
             // Configurar un endpoint de tipo GET para obtener un cliente por ID
             app.MapGet("/customer/{id}", async (int id, CustomerDAL customerDAL) =>
@@ -98,7 +101,7 @@ namespace CRM.API.Endpoints
                     return Results.Ok(result);
                 else
                     return Results.StatusCode(500);
-            });
+            }).RequireAuthorization();
 
             // Configurar un endpoint de tipo PUT para editar un cliente existente
             app.MapPut("/customer", async (EditCustomerDTO customerDTO, CustomerDAL customerDAL) =>
@@ -118,7 +121,7 @@ namespace CRM.API.Endpoints
                     return Results.Ok(result);
                 else
                     return Results.StatusCode(500);
-            });
+            }).RequireAuthorization();
 
             // Configurar un endpoint de tipo DELETE para eliminar un cliente por ID
             app.MapDelete("/customer/{id}", async (int id, CustomerDAL customerDAL) =>
@@ -129,7 +132,7 @@ namespace CRM.API.Endpoints
                     return Results.Ok(result);
                 else
                     return Results.StatusCode(500);
-            });
+            }).RequireAuthorization();
         }
     }
 }

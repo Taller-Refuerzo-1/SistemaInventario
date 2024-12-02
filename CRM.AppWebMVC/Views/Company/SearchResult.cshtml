@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SearchResultCustomerDTO.CustomerDTO>
+﻿@model IEnumerable<SearchResultCompanyDTO.CompanyDTO>
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -8,10 +8,13 @@
                     @Html.DisplayNameFor(item => item.Name)
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    @Html.DisplayNameFor(item => item.LastName)
+                    @Html.DisplayNameFor(item => item.Address)
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    @Html.DisplayNameFor(item => item.Address)
+                    @Html.DisplayNameFor(item => item.Telephone)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    @Html.DisplayNameFor(item => item.Email)
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <span class="sr-only">Acciones</span>
@@ -21,6 +24,8 @@
         <tbody>
             @if (Model != null && Model.Any())
             {
+                
+            
             @foreach (var item in Model)
             {
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -28,10 +33,13 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td class="px-6 py-4">
-                        @Html.DisplayFor(modelItem => item.LastName)
+                        @Html.DisplayFor(modelItem => item.Address)
                     </td>
                     <td class="px-6 py-4">
-                        @Html.DisplayFor(modelItem => item.Address)
+                        @Html.DisplayFor(modelItem => item.Telephone)
+                    </td>
+                    <td class="px-6 py-4">
+                        @Html.DisplayFor(modelItem => item.Email)
                     </td>
                     <td class="px-6 py-4 text-right">
                         <div class="flex space-x-2">
@@ -61,11 +69,6 @@
                     </td>
                 </tr>
             }
-           
-            }
-            else
-            {
-                <p>No se encontraron resultados.</p>
             }
         </tbody>
 

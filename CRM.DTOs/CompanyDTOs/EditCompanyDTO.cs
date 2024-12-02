@@ -17,7 +17,7 @@ namespace CRM.DTOs.CompanyDTOs
             Address = getIdResultCompanyDTO.Address;
 
         }
-        public EditCompanyDTO()
+        public EditCompanyDTO()//
         {
             Name = string.Empty;
             Address = string.Empty;
