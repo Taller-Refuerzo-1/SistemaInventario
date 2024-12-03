@@ -14,8 +14,7 @@ namespace CRM.DTOs.ProviderDTOs
         }
         public EditProviderDTO()
         {
-            Name = string.Empty;
-            Empresa = string.Empty;
+
         }
 
         public int Id { get; set; }
