@@ -20,6 +20,5 @@ namespace CRM.API.Models.DAL
         public DbSet<Company> Companys { get; set; }
 
         public DbSet<Category> Category { get; set; }
-
     }
 }
