@@ -62,3 +62,13 @@ CREATE TABLE Category
     Name VARCHAR(50) NOT NULL
 )
 GO
+
+CREATE TABLE Bodega
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    Address VARCHAR(255) NOT NULL,
+    Telephone VARCHAR(10),
+	Email VARCHAR(50)NOT NULL,
+)
+GO 
