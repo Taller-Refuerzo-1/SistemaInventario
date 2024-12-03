@@ -116,7 +116,7 @@ else
     });
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthentication(); // Debe estar antes de UseAuthorization
 app.UseAuthorization();
 

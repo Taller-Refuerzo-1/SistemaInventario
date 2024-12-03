@@ -11,7 +11,7 @@ namespace CRM.API.Endpoints
         public static void AddProviderEndpoints(this WebApplication app)
         {
             // Configurar un endpoint de tipo POST para buscar proveedores
-            app.MapPost("/provider/search", async (SearchQueryProviderDTO providerDTO, ProvidersDAL prov) =>
+            app.MapPost("/Provider/search", async (SearchQueryProviderDTO providerDTO, ProvidersDAL prov) =>
             {
                 // Crear un objeto 'Providers' a partir de los datos proporcionados
                 var providers = new Providers
@@ -49,6 +49,7 @@ namespace CRM.API.Endpoints
                 Providers.ForEach(s => {
                     providerResult.Data.Add(new SearchResultProviderDTO.ProviderDTO
                     {
+                        Id = s.Id,
                         Name = s.Name,
                         Empresa = s.Empresa,
                         Email = s.Email,
@@ -61,7 +62,7 @@ namespace CRM.API.Endpoints
             });
 
             // Configurar un endpoint de tipo GET para obtener un proveedor por ID
-            app.MapGet("/provider/{id}", async (int id, ProvidersDAL get) =>
+            app.MapGet("/Provider/{id}", async (int id, ProvidersDAL get) =>
             {
                 // Obtener un cliente por ID
                 var waza = await get.GetById(id);
@@ -84,7 +85,7 @@ namespace CRM.API.Endpoints
             });
 
             // Configurar un endpoint de tipo POST para crear un nuevo proveedor
-            app.MapPost("/provider", async (CreateProviderDTO createProviderDTO, ProvidersDAL providersDAL) =>
+            app.MapPost("/Provider", async (CreateProviderDTO createProviderDTO, ProvidersDAL providersDAL) =>
             {
                 var providers = new Providers
                 {
@@ -103,15 +104,16 @@ namespace CRM.API.Endpoints
             });
 
             // Configurar un endpoint de tipo PUT para editar un proveedor existente
-            app.MapPut("/provider", async (EditCustomerDTO customerDTO, CustomerDAL customerDAL) =>
+            app.MapPut("/Provider", async (EditProviderDTO customerDTO, ProvidersDAL customerDAL) =>
             {
                 // Crear un objeto 'proveedor' a partir de los datos proporcionados
-                var customer = new Customer
+                var customer = new Providers
                 {
                     Id = customerDTO.Id,
                     Name = customerDTO.Name,
-                    LastName = customerDTO.LastName,
-                    Address = customerDTO.Address
+                    Empresa = customerDTO.Empresa,
+                    Email = customerDTO.Email,
+                    Phone = customerDTO.Phone
                 };
 
                 // Intentar editar el proveedor y devolver el resultado correspondiente
@@ -123,7 +125,7 @@ namespace CRM.API.Endpoints
             });
 
             // Configurar un endpoint de tipo DELETE para eliminar un proveedor por ID
-            app.MapDelete("/provider/{id}", async (int id, ProvidersDAL providersDAL) =>
+            app.MapDelete("/Provider/{id}", async (int id, ProvidersDAL providersDAL) =>
             {
                 // Intentar eliminar el cliente y devolver el resultado correspondiente
                 int result = await providersDAL.Delete(id);
