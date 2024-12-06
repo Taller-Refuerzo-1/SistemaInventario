@@ -15,7 +15,7 @@ namespace CRM.DTOs.ProuctDTOs
         public string? Name_Like { get; set; }
 
         [Display(Name = "Precio")]
-        public string?  Price_Like { get; set; }
+        public double?  Price_Like { get; set; }
         
         [Display(Name = "Pagina")]
         public int Skip { get; set; }
