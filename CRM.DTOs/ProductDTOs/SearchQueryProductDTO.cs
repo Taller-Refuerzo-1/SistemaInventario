@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CRM.DTOs.ProuctDTOs
+namespace CRM.DTOs.ProductDTOs
 {
     public class SearchQueryProductDTO
     {

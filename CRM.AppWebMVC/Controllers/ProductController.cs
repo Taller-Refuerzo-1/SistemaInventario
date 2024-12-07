@@ -1,5 +1,4 @@
 ﻿using CRM.DTOs.ProductDTOs;
-using CRM.DTOs.ProuctDTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRM.AppWebMVC.Controllers
@@ -14,10 +13,9 @@ namespace CRM.AppWebMVC.Controllers
             _httpClientCRMAPI = httpClientFactory.CreateClient("CRMAPI");
         }
 
-        // Método para mostrar la lista de compañías
+        // Método para mostrar la lista de productos
         public async Task<IActionResult> Index(SearchQueryProductDTO searchQueryProductDTO, int CountRow = 0)
         {
-            // Configuración de valores por defecto para la búsqueda
             if (searchQueryProductDTO.SendRowCount == 0)
                 searchQueryProductDTO.SendRowCount = 2;
             if (searchQueryProductDTO.Take == 0)
@@ -25,15 +23,13 @@ namespace CRM.AppWebMVC.Controllers
 
             var result = new SearchResultProductDTO();
 
-            // Realizar una solicitud HTTP POST para buscar compañías en el servicio web
             var response = await _httpClientCRMAPI.PostAsJsonAsync("product/search", searchQueryProductDTO);
 
             if (response.IsSuccessStatusCode)
                 result = await response.Content.ReadFromJsonAsync<SearchResultProductDTO>();
 
-            result = result != null ? result : new SearchResultProductDTO();
+            result = result ?? new SearchResultProductDTO();
 
-            // Configuración de valores para la vista
             if (result.CountRow == 0 && searchQueryProductDTO.SendRowCount == 1)
                 result.CountRow = CountRow;
 
@@ -44,12 +40,11 @@ namespace CRM.AppWebMVC.Controllers
             return View(result);
         }
 
-        // Método para mostrar los detalles de una compañía
+        // Método para mostrar los detalles de un producto
         public async Task<IActionResult> Details(int id)
         {
             var result = new GetIdResultProductDTO();
 
-            // Realizar una solicitud HTTP GET para obtener los detalles de la compañía por ID
             var response = await _httpClientCRMAPI.GetAsync("product/" + id);
 
             if (response.IsSuccessStatusCode)
@@ -58,20 +53,19 @@ namespace CRM.AppWebMVC.Controllers
             return View(result ?? new GetIdResultProductDTO());
         }
 
-        // Método para mostrar el formulario de creación de una compañía
+        // Método para mostrar el formulario de creación de un producto
         public ActionResult Create()
         {
             return View();
         }
 
-        // Método para procesar la creación de una compañía
+        // Método para procesar la creación de un producto
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateProductDTO createProductDTO)
         {
             try
             {
-                // Realizar una solicitud HTTP POST para crear una nueva compañía
                 var response = await _httpClientCRMAPI.PostAsJsonAsync("product", createProductDTO);
 
                 if (response.IsSuccessStatusCode)
@@ -89,7 +83,7 @@ namespace CRM.AppWebMVC.Controllers
             }
         }
 
-        // Método para mostrar el formulario de edición de una compañía
+        // Método para mostrar el formulario de edición de un producto
         public async Task<IActionResult> Edit(int id)
         {
             var result = new GetIdResultProductDTO();
@@ -101,14 +95,13 @@ namespace CRM.AppWebMVC.Controllers
             return View(new EditProductDTO(result ?? new GetIdResultProductDTO()));
         }
 
-        // Método para procesar la edición de una compañía
+        // Método para procesar la edición de un producto
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, EditProductDTO editProductDTO)
         {
             try
             {
-                // Realizar una solicitud HTTP PUT para editar la compañía
                 var response = await _httpClientCRMAPI.PutAsJsonAsync("product", editProductDTO);
 
                 if (response.IsSuccessStatusCode)
@@ -126,7 +119,7 @@ namespace CRM.AppWebMVC.Controllers
             }
         }
 
-        // Método para mostrar la página de confirmación de eliminación de una compañía
+        // Método para mostrar la página de confirmación de eliminación de un producto
         public async Task<IActionResult> Delete(int id)
         {
             var result = new GetIdResultProductDTO();
@@ -138,14 +131,13 @@ namespace CRM.AppWebMVC.Controllers
             return View(result ?? new GetIdResultProductDTO());
         }
 
-        // Método para procesar la eliminación de una compañía
+        // Método para procesar la eliminación de un producto
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, GetIdResultProductDTO getIdResultProductDTO)
         {
             try
             {
-                // Realizar una solicitud HTTP DELETE para eliminar la compañía por ID
                 var response = await _httpClientCRMAPI.DeleteAsync("product/" + id);
 
                 if (response.IsSuccessStatusCode)
@@ -164,4 +156,3 @@ namespace CRM.AppWebMVC.Controllers
         }
     }
 }
-

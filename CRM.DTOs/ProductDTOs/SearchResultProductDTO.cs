@@ -10,7 +10,7 @@ namespace CRM.DTOs.ProductDTOs
     public class SearchResultProductDTO
     {
         public int CountRow { get; set; }
-        public List<ProductDTO> data { get; set; }
+        public List<ProductDTO> Data { get; set; }
         public class ProductDTO
         {
             public int Id { get; set; }

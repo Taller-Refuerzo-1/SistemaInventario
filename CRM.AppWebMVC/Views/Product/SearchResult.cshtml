@@ -1,0 +1,46 @@
+﻿@using CRM.DTOs.ProductDTOs
+@model IEnumerable<SearchResultProductDTO.ProductDTO>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Nombre
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Precio
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                            @item.Name
+                        </td>
+                        <td class="px-6 py-4">
+                            @item.Price
+                        </td>
+                        <td class="px-6 py-4">
+                            <!-- Opcional: Agregar botones de acción -->
+                            <a href="@Url.Action("Details", new { id = item.Id })" class="text-blue-600 hover:underline">Detalles</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" class="px-6 py-4 text-center text-gray-500">No se encontraron resultados.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

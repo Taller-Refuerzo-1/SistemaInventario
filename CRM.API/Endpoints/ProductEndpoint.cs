@@ -1,7 +1,6 @@
 ﻿using CRM.API.Models.DAL;
 using CRM.API.Models.EN;
 using CRM.DTOs.ProductDTOs;
-using CRM.DTOs.ProuctDTOs;
 
 namespace CRM.API.Endpoints
 {
