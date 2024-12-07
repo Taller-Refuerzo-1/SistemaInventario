@@ -23,7 +23,7 @@ namespace CRM.AppWebMVC.Controllers
 
             var result = new SearchResultProductDTO();
 
-
+            var response = await _httpClientCRMAPI.PostAsJsonAsync("product/search", searchQueryProductDTO);
 
             if (response.IsSuccessStatusCode)
                 result = await response.Content.ReadFromJsonAsync<SearchResultProductDTO>();
