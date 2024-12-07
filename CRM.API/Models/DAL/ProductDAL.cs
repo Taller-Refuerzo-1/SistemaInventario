@@ -9,7 +9,7 @@ namespace CRM.API.Models.DAL
     {
         readonly CRMContext _context;
 
-        // Constructor que recibe un objeto CRMContext para
+        // Constructor que recibe un objeto CRMContext para 
         // interactuar con la base de datos.
         public ProductDAL(CRMContext cRMContext)
         {
@@ -64,12 +64,19 @@ namespace CRM.API.Models.DAL
         private IQueryable<Product> Query(Product product)
         {
             var query = _context.Products.AsQueryable();
+
             if (!string.IsNullOrWhiteSpace(product.Name))
                 query = query.Where(s => s.Name.Contains(product.Name));
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(product.Price)))
-                query = query.Where(s => Convert.ToString( s.Price).Contains((char)product.Price));
+
+            //if (product.Price > 0)  // Compara el precio directamente
+            //{
+            //    // Puedes ajustar la lógica de comparación del precio
+            //    query = query.Where(s => s.Price.ToString().Contains(product.Price.ToString()));  // o usar un rango
+            //}
+
             return query;
         }
+
 
         // Método para contar la cantidad de resultados de búsqueda con filtros.
         public async Task<int> CountSearch(Product product)

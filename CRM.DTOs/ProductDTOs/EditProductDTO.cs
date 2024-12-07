@@ -14,7 +14,7 @@ namespace CRM.DTOs.ProductDTOs
         {
             Id = getIdResultProductDTO.Id;
             Name = getIdResultProductDTO.Name;
-            Price = (double)getIdResultProductDTO.Price;
+            Price = (decimal)getIdResultProductDTO.Price;
 
         }
         public EditProductDTO()
@@ -32,7 +32,7 @@ namespace CRM.DTOs.ProductDTOs
 
         [Display(Name = "Precio")]
         [MaxLength(10, ErrorMessage = "El campo Precio no puede tener más de 255 caracteres.")]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
 
     }

@@ -1,9 +1,9 @@
 -- Crear la base de datos CRMDB
-CREATE DATABASE Inventario
+CREATE DATABASE Inventarios
 GO
 
 -- Utilizar la base de datos CRMDB
-USE Inventario
+USE Inventarios
 GO
 
 -- Crear la tabla Customers (anteriormente Clients)
@@ -78,4 +78,11 @@ CREATE TABLE Product
     Name VARCHAR(50) NOT NULL,
     Price FLOAT(25) NOT NULL,
 )
+DELETE FROM Product
+
+DROP TABLE Products;
+
+ALTER TABLE Product
+ALTER COLUMN Price DECIMAL(10, 2); -- Cambiar el tipo a DECIMAL con precisión
+
 GO 

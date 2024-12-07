@@ -16,7 +16,7 @@ namespace CRM.DTOs.ProductDTOs
 
 
         [Display(Name = "Precio")]
-        [MaxLength(10, ErrorMessage = "El campo precio no puede tener más de 255 caracteres.")]
-        public double Price { get; set; }
+        [Range(0, 10000)]
+        public decimal Price { get; set; }
     }
 }

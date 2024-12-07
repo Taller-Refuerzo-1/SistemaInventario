@@ -1,5 +1,6 @@
 ﻿using CRM.API.Models.DAL;
 using CRM.API.Models.EN;
+using CRM.DTOs.CustomerDTOs;
 using CRM.DTOs.ProductDTOs;
 
 namespace CRM.API.Endpoints
@@ -8,7 +9,54 @@ namespace CRM.API.Endpoints
     {
         public static void AddProductEndpoints(this WebApplication app)
         {
-            
+
+            app.MapPost("/product/search", async (SearchQueryProductDTO productDTO, ProductDAL productDAL) =>
+            {
+                // Crear un objeto 'Customer' a partir de los datos proporcionados
+                var product = new Product
+                {
+                    Name = productDTO.Name_Like != null ? productDTO.Name_Like : string.Empty,
+                };
+
+                // Inicializar una lista de clientes y una variable para contar las filas
+                var products = new List<Product>();
+                int countRow = 0;
+
+                // Verificar si se debe enviar la cantidad de filas
+                if (productDTO.SendRowCount == 2)
+                {
+                    // Realizar una búsqueda de clientes y contar las filas
+                    products = await productDAL.Search(product, skip: productDTO.Skip, take: productDTO.Take);
+                    if (products.Count > 0)
+                        countRow = await productDAL.CountSearch(product);
+                }
+                else
+                {
+                    // Realizar una búsqueda de clientes sin contar las filas
+                    products = await productDAL.Search(product, skip: productDTO.Skip, take: productDTO.Take);
+                }
+
+                // Crear un objeto 'SearchResultCustomerDTO' para almacenar los resultados
+                var productResult = new SearchResultProductDTO
+                {
+                    Data = new List<SearchResultProductDTO.ProductDTO>(),
+                    CountRow = countRow
+                };
+
+                // Mapear los resultados a objetos 'CustomerDTO' y agregarlos al resultado
+                products.ForEach(s =>
+                {
+                    productResult.Data.Add(new SearchResultProductDTO.ProductDTO
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                        Price = s.Price,
+                    });
+                });
+
+                // Devolver los resultados
+                return productResult;
+            });
 
             // Endpoint para obtener un producto por ID
             app.MapGet("/product/{id}", async (int id, ProductDAL productDAL) =>

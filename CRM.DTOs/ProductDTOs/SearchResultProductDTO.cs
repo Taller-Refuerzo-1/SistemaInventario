@@ -19,7 +19,7 @@ namespace CRM.DTOs.ProductDTOs
             public string Name { get; set; }
 
             [Display(Name = "Price")]
-            public double Price { get; set; }
+            public decimal Price { get; set; }
 
             public int Skip { get; set; }
 
